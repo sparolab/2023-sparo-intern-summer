@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 
 fig1 = plt.figure(1)
 ax1  = fig1.subplots(1, 1)
-
-# C0 -> LiDAR Extrinsic Parameter
 R = np.array([[ 7.533745e-03, -9.999714e-01, -6.166020e-04],
               [ 1.480249e-02,  7.280733e-04, -9.998902e-01],
               [ 9.998621e-01,  7.523790e-03,  1.480755e-02]])
