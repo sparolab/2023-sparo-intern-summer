@@ -49,23 +49,23 @@ lidar_dtype=[('x', np.float32),
              ('intensity', np.float32)]
 
 image   = cv2.imread('0000000000.png', 1)
-h, w, _ = image.shape
+h, w = 1080 , 1920 
 
 scan    = np.fromfile('0000000000.bin', dtype = lidar_dtype)
 points  = np.stack((scan['x'], scan['y'], scan['z']), axis = -1)
 ptcloud = np.insert(points, 3, 1, axis = 1).T
 
-# 1. LiDARÀÇ PointCloud¸¦ Camera 2 ÁÂÇ¥°è·Î º¯È¯ÇÏ±â
+# 1. LiDARì˜ PointCloudë¥¼ Camera 2 ì¢Œí‘œê³„ë¡œ ë³€í™˜í•˜ê¸°
 ptcloud_C2 = np.dot(C22L, ptcloud)
 
-# 2. Ä«¸Þ¶ó ÁÂÇ¥°è¿¡ ¸Â°Ô µÚ¸¦ º¸´Â ºÎºÐ Á¦°Å 
+# 2. ì¹´ë©”ë¼ ì¢Œí‘œê³„ì— ë§žê²Œ ë’¤ë¥¼ ë³´ëŠ” ë¶€ë¶„ ì œê±° 
 ptcloud_C2 = ptcloud_C2[:, ptcloud_C2[2, :] > 0]
 
 # 3. Normalization 
 PT_image = np.matmul(P, ptcloud_C2)
 PT_image = PT_image / PT_image[2, :]
 
-# 4. ÀÌ¹ÌÁö ¹Ù±ù¿¡ ÀÖ´Â Point (Outlier) Á¦°Å
+# 4. ì´ë¯¸ì§€ ë°”ê¹¥ì— ìžˆëŠ” Point (Outlier) ì œê±°
 mask = (PT_image[0, :] >= 0) & (PT_image[0, :] < w) & (PT_image[1, :] >= 0) & (PT_image[1, :] < h)
 PT_image = PT_image[:, mask]
 ptcloud_C2 = ptcloud_C2[:, mask] 
