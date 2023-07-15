@@ -35,7 +35,7 @@ def pointcloud_to_range_img(current_vertex, fov_up, fov_down, proj_H, proj_W, ma
     
     # 2. 3D point를 2D 이미지 좌표계로 투영했을 때의 픽셀 위치 구하기
     u = 0.5*(1-yaw/(np.pi)) * proj_W#(1.0 / np.pi) * np.arctan2(scan_y, scan_x) + 0.5
-    v = (1 - (pitch + abs(fov_up))/fov) * proj_H #1.0 - ((np.arcsin(scan_z) - fov_down * np.pi / 180.0) / (fov_up * np.pi / 180.0 - fov_down * np.pi / 180.0))
+    v = (1 - (pitch - (fov_down))/fov) * proj_H #1.0 - ((np.arcsin(scan_z) - fov_down * np.pi / 180.0) / (fov_up * np.pi / 180.0 - fov_down * np.pi / 180.0))
     
     ####################################################################
     
@@ -62,8 +62,8 @@ def pointcloud_to_range_img(current_vertex, fov_up, fov_down, proj_H, proj_W, ma
 
 if __name__ == "__main__":
     # Spinning LiDAR FoV 설정 : Velodyne-HDL64e 모델 스펙 확인
-    fov_up=-24.9    # 2.0
-    fov_down=2 # -24.9
+    fov_up=2    # 2.0
+    fov_down=-24.9 # -24.9
     proj_H=64   #   64
     proj_W=900    #  900
        
