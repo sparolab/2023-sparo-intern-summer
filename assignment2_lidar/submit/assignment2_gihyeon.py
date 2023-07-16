@@ -34,8 +34,8 @@ def pointcloud_to_range_img(current_vertex, fov_up, fov_down, proj_H, proj_W, ma
     pitch = np.arcsin(scan_z/(np.sqrt(scan_x**2 + scan_y**2+ scan_z**2)))
     
     # 2. 3D point를 2D 이미지 좌표계로 투영했을 때의 픽셀 위치 구하기
-    u = 0.5*(1-yaw/(np.pi)) * proj_W#(1.0 / np.pi) * np.arctan2(scan_y, scan_x) + 0.5
-    v = (1 - (pitch - (fov_down))/fov) * proj_H #1.0 - ((np.arcsin(scan_z) - fov_down * np.pi / 180.0) / (fov_up * np.pi / 180.0 - fov_down * np.pi / 180.0))
+    u = 0.5*(1-yaw/(np.pi)) * proj_W
+    v = (1 - (pitch - (fov_down))/fov) * proj_H 
     
     ####################################################################
     
